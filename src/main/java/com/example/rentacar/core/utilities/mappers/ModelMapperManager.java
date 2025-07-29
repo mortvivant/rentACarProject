@@ -13,14 +13,14 @@ public class ModelMapperManager implements ModelMapperService {
     private ModelMapper modelMapper;
 
     @Override
-    public ModelMapper forResponses() {
+    public ModelMapper forResponse() {
         this.modelMapper.getConfiguration()
                 .setAmbiguityIgnored(true).setMatchingStrategy(MatchingStrategies.LOOSE); // response nesnesinde neler varsa onu mappleyerek gevşek eşleştirme sağlar.
         return this.modelMapper;
     }
 
     @Override
-    public ModelMapper forRequests() {
+    public ModelMapper forRequest() {
         this.modelMapper.getConfiguration()
                 .setAmbiguityIgnored(true).setMatchingStrategy(MatchingStrategies.STANDARD); // response nesnesinde neler varsa onu mappleyerek gevşek eşleştirme sağlar.
         return this.modelMapper;
