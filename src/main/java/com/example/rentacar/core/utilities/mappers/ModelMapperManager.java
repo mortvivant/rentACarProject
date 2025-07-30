@@ -22,7 +22,7 @@ public class ModelMapperManager implements ModelMapperService {
     @Override
     public ModelMapper forRequest() {
         this.modelMapper.getConfiguration()
-                .setAmbiguityIgnored(true).setMatchingStrategy(MatchingStrategies.STANDARD); // response nesnesinde neler varsa onu mappleyerek gevşek eşleştirme sağlar.
+                .setAmbiguityIgnored(true).setMatchingStrategy(MatchingStrategies.STANDARD); // request nesnesinde ne varsa her onları mappleyerek standart eşleştirme yapar.
         return this.modelMapper;
     }
 }

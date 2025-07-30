@@ -23,6 +23,7 @@ public class Car {
     private int modelYear;
     @Column(name = "state")
     private int state;
+
     @ManyToOne
     @JoinColumn(name = "model_id")
     private Model model;

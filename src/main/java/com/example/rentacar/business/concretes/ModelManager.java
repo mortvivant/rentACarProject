@@ -4,7 +4,6 @@ import com.example.rentacar.business.abstracts.ModelService;
 import com.example.rentacar.business.requests.CreateModelRequest;
 import com.example.rentacar.business.responses.GetAllModelsResponse;
 import com.example.rentacar.core.utilities.mappers.ModelMapperService;
-import com.example.rentacar.dataAccess.abstracts.BrandRepository;
 import com.example.rentacar.dataAccess.abstracts.ModelRepository;
 import com.example.rentacar.entities.concretes.Brand;
 import com.example.rentacar.entities.concretes.Model;
@@ -19,11 +18,10 @@ public class ModelManager implements ModelService {
 
     private ModelRepository modelRepository;
     private ModelMapperService modelMapperService;
-    private BrandRepository brandRepository;
 
     @Override
     public List<GetAllModelsResponse> getAll() {
-        List<GetAllModelsResponse> getAllModelsResponses = modelRepository.findAll().stream().map(model -> this.modelMapperService.forResponses()
+        List<GetAllModelsResponse> getAllModelsResponses = modelRepository.findAll().stream().map(model -> this.modelMapperService.forResponse()
                 .map(model,GetAllModelsResponse.class)).toList();
         return getAllModelsResponses;
     }
@@ -31,7 +29,8 @@ public class ModelManager implements ModelService {
     @Override
     public void addModel(CreateModelRequest createModelRequest) {
         Model model = new Model();
-        Brand brand = brandRepository.findById(createModelRequest.getBrandId()).orElseThrow();
+        Brand brand = new Brand();
+        brand.setId(createModelRequest.getBrandId());
         model.setBrand(brand);
         model.setName(createModelRequest.getName());
         this.modelRepository.save(model);
