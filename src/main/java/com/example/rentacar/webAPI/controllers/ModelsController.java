@@ -3,6 +3,7 @@ package com.example.rentacar.webAPI.controllers;
 import com.example.rentacar.business.abstracts.ModelService;
 import com.example.rentacar.business.requests.CreateModelRequest;
 import com.example.rentacar.business.responses.GetAllModelsResponse;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class ModelsController {
 
     @PostMapping()
     @ResponseStatus(code = HttpStatus.CREATED)
-    public void createModel(@RequestBody CreateModelRequest createModelRequest){
+    public void createModel(@Valid CreateModelRequest createModelRequest){
         modelService.addModel(createModelRequest);
     }
 }

@@ -3,6 +3,7 @@ package com.example.rentacar.business.concretes;
 import com.example.rentacar.business.abstracts.ModelService;
 import com.example.rentacar.business.requests.CreateModelRequest;
 import com.example.rentacar.business.responses.GetAllModelsResponse;
+import com.example.rentacar.business.rules.ModelBusinessRules;
 import com.example.rentacar.core.utilities.mappers.ModelMapperService;
 import com.example.rentacar.dataAccess.abstracts.ModelRepository;
 import com.example.rentacar.entities.concretes.Brand;
@@ -18,6 +19,7 @@ public class ModelManager implements ModelService {
 
     private ModelRepository modelRepository;
     private ModelMapperService modelMapperService;
+    private ModelBusinessRules modelBusinessRules;
 
     @Override
     public List<GetAllModelsResponse> getAll() {
@@ -28,11 +30,13 @@ public class ModelManager implements ModelService {
 
     @Override
     public void addModel(CreateModelRequest createModelRequest) {
-        Model model = new Model();
-        Brand brand = new Brand();
-        brand.setId(createModelRequest.getBrandId());
-        model.setBrand(brand);
-        model.setName(createModelRequest.getName());
-        this.modelRepository.save(model);
+        modelBusinessRules.checkIfModelNameExists(createModelRequest.getName());
+        Model model = this.modelMapperService.forRequest().map(createModelRequest,Model.class);
+//        Model model = new Model();
+//        Brand brand = new Brand();
+//        brand.setId(createModelRequest.getBrandId());
+//        model.setBrand(brand);
+//        model.setName(createModelRequest.getName());
+        this.modelRepository.saveAndFlush(model);
     }
 }
